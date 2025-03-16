@@ -1,0 +1,507 @@
+.nh
+.TH eza_colors(5) $version
+
+.SH NAME
+eza_colors — customising the file and UI colours of eza
+
+
+.SH SYNOPSIS
+The \fBEZA_COLORS\fR environment variable can be used to customise the colours that \fBeza\fR uses to highlight file names, file metadata, and parts of the UI.
+
+.PP
+You can use the \fBdircolors\fR program to generate a script that sets the variable from an input file, or if you don’t mind editing long strings of text, you can just type it out directly. These variables have the following structure:
+.IP \(bu 2
+A list of key-value pairs separated by ‘\fB=\fR’, such as ‘\fB*.txt=32\fR’.
+.IP \(bu 2
+Multiple ANSI formatting codes are separated by ‘\fB;\fR’, such as ‘\fB*.txt=32;1;4\fR’.
+.IP \(bu 2
+Finally, multiple pairs are separated by ‘\fB:\fR’, such as ‘\fB*.txt=32:*.mp3=1;35\fR’.
+
+.PP
+The key half of the pair can either be a two-letter code or a file glob, and anything that’s not a valid code will be treated as a glob, including keys that happen to be two letters long.
+
+.PP
+For backwards compatibility \fBEXA_COLORS\fR environment variables is checked if \fBEZA_COLORS\fR is unset.
+
+
+.SH EXAMPLES
+.TP
+\fBEZA_COLORS="uu=0:gu=0"\fR
+Disable the “current user” highlighting
+
+.TP
+\fBEZA_COLORS="da=32"\fR
+Turn the date column green
+
+.TP
+\fBEZA_COLORS="Vagrantfile=1;4;33"\fR
+Highlight Vagrantfiles
+
+.TP
+\fBEZA_COLORS="*.zip=38;5;125"\fR
+Override the existing zip colour
+
+.TP
+\fBEZA_COLORS="*.md=38;5;121:*.log=38;5;248"\fR
+Markdown files a shade of green, log files a shade of grey
+
+
+.SH LIST OF CODES
+\fBLS_COLORS\fR can use these ten codes:
+.TP
+\fBdi\fR
+directories
+
+.TP
+\fBex\fR
+executable files
+
+.TP
+\fBfi\fR
+regular files
+
+.TP
+\fBpi\fR
+named pipes
+
+.TP
+\fBso\fR
+sockets
+
+.TP
+\fBbd\fR
+block devices
+
+.TP
+\fBcd\fR
+character devices
+
+.TP
+\fBln\fR
+symlinks
+
+.TP
+\fBor\fR
+symlinks with no target
+
+.PP
+\fBEZA_COLORS\fR can use many more:
+.TP
+\fBoc\fR
+the permissions displayed as octal
+
+.TP
+\fBur\fR
+the user-read permission bit
+
+.TP
+\fBuw\fR
+the user-write permission bit
+
+.TP
+\fBux\fR
+the user-execute permission bit for regular files
+
+.TP
+\fBue\fR
+the user-execute for other file kinds
+
+.TP
+\fBgr\fR
+the group-read permission bit
+
+.TP
+\fBgw\fR
+the group-write permission bit
+
+.TP
+\fBgx\fR
+the group-execute permission bit
+
+.TP
+\fBtr\fR
+the others-read permission bit
+
+.TP
+\fBtw\fR
+the others-write permission bit
+
+.TP
+\fBtx\fR
+the others-execute permission bit
+
+.TP
+\fBsu\fR
+setuid, setgid, and sticky permission bits for files
+
+.TP
+\fBsf\fR
+setuid, setgid, and sticky for other file kinds
+
+.TP
+\fBxa\fR
+the extended attribute indicator
+
+.TP
+\fBsn\fR
+the numbers of a file’s size (sets \fBnb\fR, \fBnk\fR, \fBnm\fR, \fBng\fR and \fBnt\fR)
+
+.TP
+\fBnb\fR
+the numbers of a file’s size if it is lower than 1 KB/Kib
+
+.TP
+\fBnk\fR
+the numbers of a file’s size if it is between 1 KB/KiB and 1 MB/MiB
+
+.TP
+\fBnm\fR
+the numbers of a file’s size if it is between 1 MB/MiB and 1 GB/GiB
+
+.TP
+\fBng\fR
+the numbers of a file’s size if it is between 1 GB/GiB and 1 TB/TiB
+
+.TP
+\fBnt\fR
+the numbers of a file’s size if it is 1 TB/TiB or higher
+
+.TP
+\fBsb\fR
+the units of a file’s size (sets \fBub\fR, \fBuk\fR, \fBum\fR, \fBug\fR and \fBut\fR)
+
+.TP
+\fBub\fR
+the units of a file’s size if it is lower than 1 KB/Kib
+
+.TP
+\fBuk\fR
+the units of a file’s size if it is between 1 KB/KiB and 1 MB/MiB
+
+.TP
+\fBum\fR
+the units of a file’s size if it is between 1 MB/MiB and 1 GB/GiB
+
+.TP
+\fBug\fR
+the units of a file’s size if it is between 1 GB/GiB and 1 TB/TiB
+
+.TP
+\fBut\fR
+the units of a file’s size if it is 1 TB/TiB or higher
+
+.TP
+\fBdf\fR
+a device’s major ID
+
+.TP
+\fBds\fR
+a device’s minor ID
+
+.TP
+\fBuu\fR
+a user that’s you
+
+.TP
+\fBuR\fR
+a user that's root
+
+.TP
+\fBun\fR
+a user that’s someone else
+
+.TP
+\fBgu\fR
+a group that you belong to
+
+.TP
+\fBgR\fR
+a group related to root
+
+.TP
+\fBgn\fR
+a group you aren’t a member of
+
+.TP
+\fBlc\fR
+a number of hard links
+
+.TP
+\fBlm\fR
+a number of hard links for a regular file with at least two
+
+.TP
+\fBga\fR
+a new flag in Git
+
+.TP
+\fBgm\fR
+a modified flag in Git
+
+.TP
+\fBgd\fR
+a deleted flag in Git
+
+.TP
+\fBgv\fR
+a renamed flag in Git
+
+.TP
+\fBgt\fR
+a modified metadata flag in Git
+
+.TP
+\fBgi\fR
+an ignored flag in Git
+
+.TP
+\fBgc\fR
+a conflicted flag in Git
+
+.TP
+\fBGm\fR
+main branch of repo
+
+.TP
+\fBGo\fR
+other branch of repo
+
+.TP
+\fBGc\fR
+clean branch of repo
+
+.TP
+\fBGd\fR
+dirty branch of repo
+
+.TP
+\fBxx\fR
+“punctuation”, including many background UI elements
+
+.TP
+\fBda\fR
+a file’s date
+
+.TP
+\fBin\fR
+a file’s inode number
+
+.TP
+\fBbl\fR
+a file’s number of blocks
+
+.TP
+\fBhd\fR
+the header row of a table
+
+.TP
+\fBlp\fR
+the path of a symlink
+
+.TP
+\fBcc\fR
+an escaped character in a filename
+
+.TP
+\fBbO\fR
+the overlay style for broken symlink paths
+
+.TP
+\fBsp\fR
+special (not file, dir, mount, exec, pipe, socket, block device, char device, or link)
+
+.TP
+\fBmp\fR
+a mount point
+
+.TP
+\fBim\fR
+a regular file that is an image
+
+.TP
+\fBvi\fR
+a regular file that is a video
+
+.TP
+\fBmu\fR
+a regular file that is lossy music
+
+.TP
+\fBlo\fR
+a regular file that is lossless music
+
+.TP
+\fBcr\fR
+a regular file that is related to cryptography (ex: key or certificate)
+
+.TP
+\fBdo\fR
+a regular file that is a document (ex: office suite document or PDF)
+
+.TP
+\fBco\fR
+a regular file that is compressed
+
+.TP
+\fBtm\fR
+a regular file that is temporary (ex: a text editor's backup file)
+
+.TP
+\fBcm\fR
+a regular file that is a compilation artifact (ex: Java class file)
+
+.TP
+\fBbu\fR
+a regular file that is used to build a project (ex: Makefile)
+
+.TP
+\fBsc\fR
+a regular file that is source code
+
+.TP
+\fBic\fR
+the icon (this is optional, if not set the icon color matches the file name's)
+
+.TP
+\fBSn\fR
+No security context on a file
+
+.TP
+\fBSu\fR
+SELinux user
+
+.TP
+\fBSr\fR
+SELinux role
+
+.TP
+\fBSt\fR
+SELinux type
+
+.TP
+\fBSl\fR
+SELinux level
+
+.TP
+\fBff\fR
+BSD file flags
+
+.PP
+Values in \fBEXA_COLORS\fR override those given in \fBLS_COLORS\fR, so you don’t need to re-write an existing \fBLS_COLORS\fR variable with proprietary extensions.
+
+
+.SH LIST OF STYLES
+Unlike some versions of \fBls\fR, the given ANSI values must be valid colour codes: eza won’t just print out whichever characters are given.
+
+.PP
+The codes accepted by eza are:
+.TP
+\fB1\fR
+for bold
+
+.TP
+\fB2\fR
+for dimmed
+
+.TP
+\fB3\fR
+for italic
+
+.TP
+\fB4\fR
+for underline
+
+.TP
+\fB31\fR
+for red text
+
+.TP
+\fB32\fR
+for green text
+
+.TP
+\fB33\fR
+for yellow text
+
+.TP
+\fB34\fR
+for blue text
+
+.TP
+\fB35\fR
+for purple text
+
+.TP
+\fB36\fR
+for cyan text
+
+.TP
+\fB37\fR
+for white text
+
+.TP
+\fB90\fR
+for dark gray text
+
+.TP
+\fB91\fR
+for bright red text
+
+.TP
+\fB92\fR
+for bright green text
+
+.TP
+\fB93\fR
+for bright yellow text
+
+.TP
+\fB94\fR
+for bright blue text
+
+.TP
+\fB95\fR
+for bright purple text
+
+.TP
+\fB96\fR
+for bright cyan text
+
+.TP
+\fB97\fR
+for bright  text
+
+.TP
+\fB38;5;nnn\fR
+for a colour from 0 to 255 (replace the \fBnnn\fR part)
+
+.PP
+Many terminals will treat bolded text as a different colour, or at least provide the option to.
+
+.PP
+eza provides its own built-in set of file extension mappings that cover a large range of common file extensions, including documents, archives, media, and temporary files.
+Any mappings in the environment variables will override this default set: running eza with \fBLS_COLORS="*.zip=32"\fR will turn zip files green but leave the colours of other compressed files alone.
+
+.PP
+You can also disable this built-in set entirely by including a \fBreset\fR entry at the beginning of \fBEZA_COLORS\fR\&.
+So setting \fBEZA_COLORS="reset:*.txt=31"\fR will highlight only text files; setting \fBEZA_COLORS="reset"\fR will highlight nothing.
+
+
+.SH AUTHOR
+eza is maintained by Christina Sørensen and many other contributors.
+
+.PP
+\fBSource code:\fP \fBhttps://github.com/eza-community/eza\fR \\
+\fBContributors:\fP \fBhttps://github.com/eza-community/eza/graphs/contributors\fR
+
+.PP
+Our infinite thanks to Benjamin ‘ogham’ Sago and all the other contributors of exa, from which eza was forked.
+
+
+.SH SEE ALSO
+.IP \(bu 2
+
+\[la]eza.1.md\[ra]
+.IP \(bu 2
+
+\[la]eza_colors\-explanation.5.md\[ra]

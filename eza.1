@@ -1,0 +1,447 @@
+.nh
+.TH eza(1) $version
+
+.SH NAME
+eza — a modern replacement for ls
+
+
+.SH SYNOPSIS
+\fBeza [options] [files...]\fR
+
+.PP
+\fBeza\fP is a modern replacement for \fBls\fR\&.
+It uses colours for information by default, helping you distinguish between many types of files, such as whether you are the owner, or in the owning group.
+
+.PP
+It also has extra features not present in the original \fBls\fR, such as viewing the Git status for a directory, or recursing into directories with a tree view.
+
+
+.SH EXAMPLES
+.TP
+\fBeza\fR
+Lists the contents of the current directory in a grid.
+
+.TP
+\fBeza --oneline --reverse --sort=size\fR
+Displays a list of files with the largest at the top.
+
+.TP
+\fBeza --long --header --inode --git\fR
+Displays a table of files with a header, showing each file’s metadata, inode, and Git status.
+
+.TP
+\fBeza --long --tree --level=3\fR
+Displays a tree of files, three levels deep, as well as each file’s metadata.
+
+
+.SH META OPTIONS
+.TP
+\fB--help\fR
+Show list of command-line options.
+
+.TP
+\fB-v\fR, \fB--version\fR
+Show version of eza.
+
+
+.SH DISPLAY OPTIONS
+.TP
+\fB-1\fR, \fB--oneline\fR
+Display one entry per line.
+
+.TP
+\fB-F\fR, \fB--classify=WHEN\fR
+Display file kind indicators next to file names.
+
+.PP
+Valid settings are ‘\fBalways\fR’, ‘\fBautomatic\fR’ (or ‘\fBauto\fR’ for short), and ‘\fBnever\fR’.
+The default value is ‘\fBautomatic\fR’.
+
+.PP
+The default behavior (\fBautomatic\fR or \fBauto\fR) will display file kind indicators only when the standard output is connected to a real terminal. If \fBeza\fR is ran while in a \fBtty\fR, or the output of \fBeza\fR is either redirected to a file or piped into another program, file kind indicators will not be used. Setting this option to ‘\fBalways\fR’ causes \fBeza\fR to always display file kind indicators, while ‘\fBnever\fR’ disables the use of file kind indicators.
+.TP
+\fB-G\fR, \fB--grid\fR
+Display entries as a grid (default).
+
+.TP
+\fB-l\fR, \fB--long\fR
+Display extended file metadata as a table.
+
+.TP
+\fB-R\fR, \fB--recurse\fR
+Recurse into directories.
+
+.TP
+\fB-T\fR, \fB--tree\fR
+Recurse into directories as a tree.
+
+.TP
+\fB--follow-symlinks\fR
+Drill down into symbolic links that point to directories.
+
+.TP
+\fB-X\fR, \fB--dereference\fR
+Dereference symbolic links when displaying information.
+
+.TP
+\fB-x\fR, \fB--across\fR
+Sort the grid across, rather than downwards.
+
+.TP
+\fB--color=WHEN\fR, \fB--colour=WHEN\fR
+When to use terminal colours (using ANSI escape code to colorize the output).
+
+.PP
+Valid settings are ‘\fBalways\fR’, ‘\fBautomatic\fR’ (or ‘\fBauto\fR’ for short), and ‘\fBnever\fR’.
+The default value is ‘\fBautomatic\fR’.
+
+.PP
+The default behavior (‘\fBautomatic\fR’ or ‘\fBauto\fR’) is to colorize the output only when the standard output is connected to a real terminal. If the output of \fBeza\fR is redirected to a file or piped into another program, terminal colors will not be used. Setting this option to ‘\fBalways\fR’ causes \fBeza\fR to always output terminal color, while ‘\fBnever\fR’ disables the use of terminal color.
+
+.PP
+Manually setting this option overrides \fBNO_COLOR\fR environment.
+.TP
+\fB--color-scale\fR, \fB--colour-scale\fR
+highlight levels of \fBfield\fR distinctly.
+Use comma(,) separated list of all, age, size
+
+.TP
+\fB--color-scale-mode\fR, \fB--colour-scale-mode\fR
+Use gradient or fixed colors in \fB--color-scale\fR\&.
+
+.PP
+Valid options are \fBfixed\fR or \fBgradient\fR\&.
+The default value is \fBgradient\fR\&.
+.TP
+\fB--icons=WHEN\fR
+Display icons next to file names.
+
+.PP
+Valid settings are ‘\fBalways\fR’, ‘\fBautomatic\fR’ (‘\fBauto\fR’ for short), and ‘\fBnever\fR’.
+The default value is ‘\fBautomatic\fR’.
+
+.PP
+\fBautomatic\fR or \fBauto\fR will display icons only when the standard output is connected to a real terminal. If \fBeza\fR is ran while in a \fBtty\fR, or the output of \fBeza\fR is either redirected to a file or piped into another program, icons will not be used. Setting this option to ‘\fBalways\fR’ causes \fBeza\fR to always display icons, while ‘\fBnever\fR’ disables the use of icons.
+.TP
+\fB--no-quotes\fR
+Don't quote file names with spaces.
+
+.TP
+\fB--hyperlink\fR
+Display entries as hyperlinks
+
+.TP
+\fB-w\fR, \fB--width=COLS\fR
+Set screen width in columns.
+
+
+.SH FILTERING AND SORTING OPTIONS
+.TP
+\fB-a\fR, \fB--all\fR
+Show hidden and “dot” files.
+Use this twice to also show the ‘\fB\&.\fR’ and ‘\fB\&..\fR’ directories.
+
+.TP
+\fB-A\fR, \fB--almost-all\fR
+Equivalent to --all; included for compatibility with \fBls -A\fR\&.
+
+.TP
+\fB-d\fR, \fB--list-dirs\fR
+List directories as regular files, rather than recursing and listing their contents.
+
+.TP
+\fB-L\fR, \fB--level=DEPTH\fR
+Limit the depth of recursion.
+
+.TP
+\fB-r\fR, \fB--reverse\fR
+Reverse the sort order.
+
+.TP
+\fB-s\fR, \fB--sort=SORT_FIELD\fR
+Which field to sort by.
+
+.PP
+Valid sort fields are ‘\fBname\fR’, ‘\fBName\fR’, ‘\fBextension\fR’, ‘\fBExtension\fR’, ‘\fBsize\fR’, ‘\fBmodified\fR’, ‘\fBchanged\fR’, ‘\fBaccessed\fR’, ‘\fBcreated\fR’, ‘\fBinode\fR’, ‘\fBtype\fR’, and ‘\fBnone\fR’.
+
+.PP
+The \fBmodified\fR sort field has the aliases ‘\fBdate\fR’, ‘\fBtime\fR’, and ‘\fBnewest\fR’, and its reverse order has the aliases ‘\fBage\fR’ and ‘\fBoldest\fR’.
+
+.PP
+Sort fields starting with a capital letter will sort uppercase before lowercase: ‘A’ then ‘B’ then ‘a’ then ‘b’. Fields starting with a lowercase letter will mix them: ‘A’ then ‘a’ then ‘B’ then ‘b’.
+.TP
+\fB-I\fR, \fB--ignore-glob=GLOBS\fR
+Glob patterns, pipe-separated, of files to ignore.
+
+.TP
+\fB--git-ignore\fR [if eza was built with git support]
+Do not list files that are ignored by Git.
+
+.TP
+\fB--group-directories-first\fR
+List directories before other files.
+
+.TP
+\fB--group-directories-last\fR
+List directories after other files.
+
+.TP
+\fB-D\fR, \fB--only-dirs\fR
+List only directories, not files.
+
+.TP
+\fB-f\fR, \fB--only-files\fR
+List only files, not directories.
+
+.TP
+\fB--show-symlinks\fR
+Explicitly show symbolic links (when used with \fB--only-files\fR | \fB--only-dirs\fR)
+
+.TP
+\fB--no-symlinks\fR
+Do not show symbolic links
+
+
+.SH LONG VIEW OPTIONS
+These options are available when running with \fB--long\fR (\fB-l\fR):
+.TP
+\fB-b\fR, \fB--binary\fR
+List file sizes with binary prefixes.
+
+.TP
+\fB-B\fR, \fB--bytes\fR
+List file sizes in bytes, without any prefixes.
+
+.TP
+\fB--changed\fR
+Use the changed timestamp field.
+
+.TP
+\fB-g\fR, \fB--group\fR
+List each file’s group.
+
+.TP
+\fB--smart-group\fR
+Only show group if it has a different name from owner
+
+.TP
+\fB-h\fR, \fB--header\fR
+Add a header row to each column.
+
+.TP
+\fB-H\fR, \fB--links\fR
+List each file’s number of hard links.
+
+.TP
+\fB-i\fR, \fB--inode\fR
+List each file’s inode number.
+
+.TP
+\fB-m\fR, \fB--modified\fR
+Use the modified timestamp field.
+
+.TP
+\fB-M\fR, \fB--mounts\fR
+Show mount details (Linux and Mac only)
+
+.TP
+\fB-n\fR, \fB--numeric\fR
+List numeric user and group IDs.
+
+.TP
+\fB-O\fR, \fB--flags\fR
+List file flags on Mac and BSD systems and file attributes on Windows systems.  By default, Windows attributes are displayed in a long form.  To display in attributes as single character set the environment variable \fBEZA_WINDOWS_ATTRIBUTES=short\fR\&.  On BSD systems see chflags(1) for a list of file flags and their meanings.
+
+.TP
+\fB-S\fR, \fB--blocksize\fR
+List each file’s size of allocated file system blocks.
+
+.TP
+\fB-t\fR, \fB--time=WORD\fR
+Which timestamp field to list.
+
+Valid timestamp fields are ‘\fBmodified\fR’, ‘\fBchanged\fR’, ‘\fBaccessed\fR’, and ‘\fBcreated\fR’.
+
+.TP
+\fB--time-style=STYLE\fR
+How to format timestamps.
+
+Valid timestamp styles are ‘\fBdefault\fR’, ‘\fBiso\fR’, ‘\fBlong-iso\fR’, ‘\fBfull-iso\fR’, ‘\fBrelative\fR’, or a custom style ‘\fB+<FORMAT>\fR’ (e.g., ‘\fB+%Y-%m-%d %H:%M\fR’ => ‘\fB2023-09-30 13:00\fR’).
+
+.PP
+\fB<FORMAT>\fR should be a chrono format string.  For details on the chrono format syntax, please read: https://docs.rs/chrono/latest/chrono/format/strftime/index.html .
+
+.PP
+Alternatively, \fB<FORMAT>\fR can be a two line string, the first line will be used for non-recent files and the second for recent files.  E.g., if \fB<FORMAT>\fR is "\fB%Y-%m-%d %H<newline>--%m-%d %H:%M\fR", non-recent files => "\fB2022-12-30 13\fR", recent files => "\fB--09-30 13:34\fR".
+.TP
+\fB--total-size\fR
+Show recursive directory size (unix only).
+
+.TP
+\fB-u\fR, \fB--accessed\fR
+Use the accessed timestamp field.
+
+.TP
+\fB-U\fR, \fB--created\fR
+Use the created timestamp field.
+
+.TP
+\fB--no-permissions\fR
+Suppress the permissions field.
+
+.TP
+\fB-o\fR, \fB--octal-permissions\fR
+List each file's permissions in octal format.
+
+.TP
+\fB--no-filesize\fR
+Suppress the file size field.
+
+.TP
+\fB--no-user\fR
+Suppress the user field.
+
+.TP
+\fB--no-time\fR
+Suppress the time field.
+
+.TP
+\fB--stdin\fR
+When you wish to pipe directories to eza/read from stdin. Separate one per line or define custom separation char in \fBEZA_STDIN_SEPARATOR\fR env variable.
+
+.TP
+\fB-@\fR, \fB--extended\fR
+List each file’s extended attributes and sizes.
+
+.TP
+\fB-Z\fR, \fB--context\fR
+List each file's security context.
+
+.TP
+\fB--git\fR  [if eza was built with git support]
+List each file’s Git status, if tracked.
+This adds a two-character column indicating the staged and unstaged statuses respectively. The status character can be ‘\fB-\fR’ for not modified, ‘\fBM\fR’ for a modified file, ‘\fBN\fR’ for a new file, ‘\fBD\fR’ for deleted, ‘\fBR\fR’ for renamed, ‘\fBT\fR’ for type-change, ‘\fBI\fR’ for ignored, and ‘\fBU\fR’ for conflicted. Directories will be shown to have the status of their contents, which is how ‘deleted’ is possible if a directory contains a file that has a certain status, it will be shown to have that status.
+
+.TP
+\fB--git-repos\fR [if eza was built with git support]
+List each directory’s Git status, if tracked.
+Symbols shown are \fB|\fR= clean, \fB+\fR= dirty, and \fB~\fR= for unknown.
+
+.TP
+\fB--git-repos-no-status\fR [if eza was built with git support]
+List if a directory is a Git repository, but not its status.
+All Git repository directories will be shown as (themed) \fB-\fR without status indicated.
+
+.TP
+\fB--no-git\fR
+Don't show Git status (always overrides \fB--git\fR, \fB--git-repos\fR, \fB--git-repos-no-status\fR)
+
+
+.SH ENVIRONMENT VARIABLES
+If an environment variable prefixed with \fBEZA_\fR is not set, for backward compatibility, it will default to its counterpart starting with \fBEXA_\fR\&.
+
+.PP
+eza responds to the following environment variables:
+
+.SH \fBCOLUMNS\fR
+Overrides the width of the terminal, in characters, however, \fB-w\fR takes precedence.
+
+.PP
+For example, ‘\fBCOLUMNS=80 eza\fR’ will show a grid view with a maximum width of 80 characters.
+
+.PP
+This option won’t do anything when eza’s output doesn’t wrap, such as when using the \fB--long\fR view.
+
+.SH \fBEZA_STRICT\fR
+Enables \fIstrict mode\fP, which will make eza error when two command-line options are incompatible.
+
+.PP
+Usually, options can override each other going right-to-left on the command line, so that eza can be given aliases: creating an alias ‘\fBeza=eza --sort=ext\fR’ then running ‘\fBeza --sort=size\fR’ with that alias will run ‘\fBeza --sort=ext --sort=size\fR’, and the sorting specified by the user will override the sorting specified by the alias.
+
+.PP
+In strict mode, the two options will not co-operate, and eza will error.
+
+.PP
+This option is intended for use with automated scripts and other situations where you want to be certain you’re typing in the right command.
+
+.SH \fBEZA_GRID_ROWS\fR
+Limits the grid-details view (‘\fBeza --grid --long\fR’) so it’s only activated when at least the given number of rows of output would be generated.
+
+.PP
+With widescreen displays, it’s possible for the grid to look very wide and sparse, on just one or two lines with none of the columns lining up.
+By specifying a minimum number of rows, you can only use the view if it’s going to be worth using.
+
+.SH \fBEZA_ICON_SPACING\fR
+Specifies the number of spaces to print between an icon (see the ‘\fB--icons\fR’ option) and its file name.
+
+.PP
+Different terminals display icons differently, as they usually take up more than one character width on screen, so there’s no “standard” number of spaces that eza can use to separate an icon from text. One space may place the icon too close to the text, and two spaces may place it too far away. So the choice is left up to the user to configure depending on their terminal emulator.
+
+.SH \fBNO_COLOR\fR
+Disables colours in the output (regardless of its value). Can be overridden by \fB--color\fR option.
+
+.PP
+See \fBhttps://no-color.org/\fR for details.
+
+.SH \fBLS_COLORS\fR, \fBEZA_COLORS\fR
+Specifies the colour scheme used to highlight files based on their name and kind, as well as highlighting metadata and parts of the UI.
+
+.PP
+For more information on the format of these environment variables, see the 
+\[la]eza_colors.5.md\[ra] manual page.
+
+.SH \fBEZA_OVERRIDE_GIT\fR
+Overrides any \fB--git\fR or \fB--git-repos\fR argument
+
+.SH \fBEZA_MIN_LUMINANCE\fR
+Specifies the minimum luminance to use when color-scale is active. It's value can be between -100 to 100.
+
+.SH \fBEZA_ICONS_AUTO\fR
+If set, automates the same behavior as using \fB--icons\fR or \fB--icons=auto\fR\&. Useful for if you always want to have icons enabled.
+
+.PP
+Any explicit use of the \fB--icons=WHEN\fR flag overrides this behavior.
+
+.SH \fBEZA_STDIN_SEPARATOR\fR
+Specifies the separator to use when file names are piped from stdin. Defaults to newline.
+
+.SH \fBEZA_CONFIG_DIR\fR
+Specifies the directory where eza will look for its configuration and theme files. Defaults to \fB$XDG_CONFIG_HOME/eza\fR or \fB$HOME/.config/eza\fR if \fBXDG_CONFIG_HOME\fR is not set.
+
+
+.SH EXIT STATUSES
+.TP
+0
+If everything goes OK.
+
+.TP
+1
+If there was an I/O error during operation.
+
+.TP
+3
+If there was a problem with the command-line arguments.
+
+.TP
+13
+If permission is denied to access a path.
+
+
+.SH AUTHOR
+eza is maintained by Christina Sørensen and many other contributors.
+
+.PP
+\fBSource code:\fP \fBhttps://github.com/eza-community/eza\fR \\
+\fBContributors:\fP \fBhttps://github.com/eza-community/eza/graphs/contributors\fR
+
+.PP
+Our infinite thanks to Benjamin ‘ogham’ Sago and all the other contributors of exa, from which eza was forked.
+
+
+.SH SEE ALSO
+.IP \(bu 2
+
+\[la]eza_colors.5.md\[ra]
+.IP \(bu 2
+
+\[la]eza_colors\-explanation.5.md\[ra]
